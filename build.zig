@@ -11,13 +11,18 @@ pub fn build(b: *std.Build) void {
         .optimize = optimize,
     });
 
-    const sdl_path = "C:\\Users\\Setup Game\\Desktop\\ZigMario\\libs\\sdl";
+    const sdl_path = "\\libs\\sdl";
 	// const lazy_path = b.dependencyPath(sdl_path, "include");
 
 
-    exe.addIncludePath(.{.path = sdl_path ++ "include"});
-    exe.addLibraryPath(.{.path = sdl_path ++ "lib\\x64"});
-    b.installBinFile(sdl_path ++ "lib\\x64\\SDL2.dll", "SDL2.dll");
+    exe.addIncludePath(.{.cwd_relative  = sdl_path ++ "include"});
+    exe.addLibraryPath(.{.cwd_relative  = sdl_path ++ "lib\\x64"});
+    
+	// b.installBinFile(sdl_path ++ "lib\\x64\\SDL2.dll", "SDL2.dll");
+	b.getInstallStep().dependOn(&b.addInstallBinFile(.{ .cwd_relative = sdl_path ++ "lib\\x64\\SDL2.dll" }, "SDL2.dll"),);
+
+
+
     exe.linkSystemLibrary("sdl2");
     exe.linkLibC();
     // exe.install();
