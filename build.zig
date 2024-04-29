@@ -26,7 +26,6 @@ pub fn build(b: *std.Build) void {
 
     exe.linkSystemLibrary("sdl2");
     exe.linkLibC();
-    // exe.install();
 
 	b.installArtifact(exe);
 
